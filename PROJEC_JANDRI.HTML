@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>JANDRI HARTAT GEA</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            /* ========== WELCOME SCREEN ========== */
+            .welcome-screen {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab, #c471ed, #f64f59);
+                background-size: 400% 400%;
+                animation: gradientBG 15s ease infinite;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+                transition: opacity 0.8s ease, visibility 0.8s;
+            }
+
+            .welcome-screen.hide {
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            @keyframes gradientBG {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
+
+            .welcome-title {
+                font-size: 70px;
+                font-weight: bold;
+                font-family: 'Georgia', serif;
+                background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8);
+                background-size: 400% 400%;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                animation: rainbowText 4s ease infinite;
+                margin-bottom: 20px;
+                text-shadow: 0 0 20px rgba(255,255,255,0.4);
+            }
+
+            @keyframes rainbowText {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
+
+            .welcome-subtitle {
+                font-size: 22px;
+                color: white;
+                margin-bottom: 40px;
+                animation: fadeInUp 1.5s ease;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            }
+
+            .enter-btn {
+                padding: 18px 50px;
+                font-size: 22px;
+                font-weight: bold;
+                background: linear-gradient(45deg, #ff00cc, #3333ff);
+                background-size: 200% 200%;
+                color: white;
+                border: none;
+                border-radius: 50px;
+                cursor: pointer;
+                animation: gradientBtn 3s ease infinite;
+                box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+                transition: transform 0.3s;
+            }
+
+            .enter-btn:hover {
+                transform: scale(1.08);
+            }
+
+            @keyframes gradientBtn {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
+
+            @keyframes fadeInUp {
+                from { opacity: 0; transform: translateY(30px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+
+            .floating-shapes {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                z-index: -1;
+            }
+
+            .shape {
+                position: absolute;
+                filter: blur(40px);
+                opacity: 0.5;
+                animation: float 18s infinite;
+                border-radius: 50%;
+            }
+
+            .shape:nth-child(1) { width: 70px; height: 70px; background: #ff00cc; left: 10%; animation-delay: 0s; }
+            .shape:nth-child(2) { width: 100px; height: 100px; background: #3333ff; right: 15%; top: 25%; animation-delay: 3s; }
+            .shape:nth-child(3) { width: 50px; height: 50px; background: #00ffcc; left: 75%; bottom: 20%; animation-delay: 6s; }
+            .shape:nth-child(4) { width: 80px; height: 80px; background: #ffcc00; left: 35%; top: 65%; animation-delay: 9s; }
+
+            @keyframes float {
+                0%, 100% { transform: translateY(0) rotate(0deg); }
+                33% { transform: translateY(-80px) rotate(120deg); }
+                66% { transform: translateY(40px) rotate(240deg); }
+            }
+
+            /* ========== MAIN SITE STYLES ========== */
+            :root {
+                --primary-color: aliceblue;
+                --secondary-color: black;
+            }
+
+            .dark-theme {
+                --primary-color: black;
+                --secondary-color: aliceblue;
+            }
+
+            /* Animated background untuk seluruh website */
+            body {
+                background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #4facfe, #00f2fe);
+                background-size: 600% 600%;
+                animation: bodyGradient 25s ease infinite;
+            }
+
+            @keyframes bodyGradient {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
+
+            header {
+                background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(230,245,255,0.95));
+                height: 100vh;
+                width: 100%;
+                position: relative;
+                overflow: hidden;
+            }
+
+            /* Particles animasi di header */
+            .header-particles {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+            }
+
+            .particle {
+                position: absolute;
+                width: 6px;
+                height: 6px;
+                background: rgba(0, 100, 255, 0.4);
+                border-radius: 50%;
+                animation: particleUp 12s linear infinite;
+            }
+
+            .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+            .particle:nth-child(2) { left: 20%; animation-delay: 1.5s; }
+            .particle:nth-child(3) { left: 35%; animation-delay: 3s; }
+            .particle:nth-child(4) { left: 50%; animation-delay: 4.5s; }
+            .particle:nth-child(5) { left: 65%; animation-delay: 6s; }
+            .particle:nth-child(6) { left: 80%; animation-delay: 7.5s; }
+            .particle:nth-child(7) { left: 90%; animation-delay: 9s; }
+
+            @keyframes particleUp {
+                0% { transform: translateY(100vh) scale(0); opacity: 0; }
+                10% { opacity: 1; transform: scale(1); }
+                90% { opacity: 1; }
+                100% { transform: translateY(-100px) scale(0); opacity: 0; }
+            }
+
+            header .banner img {
+                width: 700px;
+                height: 450px;
+                position: absolute;
+                right: 5%;
+                top: 22%;
+                animation: floatCar 4s ease-in-out infinite;
+                border-radius: 20px;
+                box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            }
+
+            @keyframes floatCar {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-15px); }
+            }
+
+            header .intro {
+                position: relative;
+                top: 28%;
+                margin-left: 50px;
+                z-index: 2;
+            }
+
+            /* Teks judul dengan animasi gradient */
+            header .intro h1 {
+                font-size: 55px;
+                font-weight: bold;
+                font-family: 'Georgia', sans-serif;
+                background: linear-gradient(45deg, #0066ff, #00ccff, #00ffcc, #00ccff, #0066ff);
+                background-size: 300% 300%;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                animation: textGradient 5s ease infinite, slideIn 1s ease;
+            }
+
+            @keyframes textGradient {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
+
+            @keyframes slideIn {
+                from { opacity: 0; transform: translateX(-50px); }
+                to { opacity: 1; transform: translateX(0); }
+            }
+
+            header .intro p {
+                font-size: 17px;
+                color: var(--secondary-color);
+                padding-top: 10px;
+                line-height: 1.6;
+                animation: fadeInUp 1.5s ease 0.3s both;
+            }
+
+            header .intro button {
+                padding: 12px 28px;
+                margin-top: 25px;
+                background: linear-gradient(45deg, #0066ff, #00ccff);
+                background-size: 200% 200%;
+                color: white;
+                border: none;
+                border-radius: 50px;
+                font-size: 16px;
+                font-weight: bold;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                animation: gradientBtn 3s ease infinite, fadeInUp 1.5s ease 0.6s both;
+                box-shadow: 0 8px 20px rgba(0,100,255,0.3);
+                transition: transform 0.3s;
+            }
+
+            header .intro button:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 12px 30px rgba(0,100,255,0.5);
+            }
+
+            header .icons-whatsapp {
+                width: 28px;
+                height: 28px;
+                animation: bounce 2s infinite;
+            }
+
+            @keyframes bounce {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-8px); }
+            }
+
+            header .navbar {
+                display: flex;
+                background: linear-gradient(90deg, #0033cc, #0066ff, #0099ff);
+                background-size: 200% 100%;
+                animation: navGradient 6s ease infinite;
+                justify-content: space-between;
+                align-items: center;
+                padding: 12px 7%;
+                position: relative;
+                z-index: 10;
+            }
+
+            @keyframes navGradient {
+                0%, 100% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+            }
+
+            header .logo .logo-img {
+                height: 42px;
+                width: auto;
+                object-fit: contain;
+                animation: logoGlow 3s ease-in-out infinite;
+            }
+
+            @keyframes logoGlow {
+                0%, 100% { filter: drop-shadow(0 0 5px rgba(255,255,255,0.5)); }
+                50% { filter: drop-shadow(0 0 15px rgba(100,200,255,0.8)); }
+            }
+
+            header .navbar a {
+                font-size: 18px;
+                font-weight: bold;
+                color: #f2f2f2;
+                padding: 12px 18px;
+                text-decoration: none;
+                position: relative;
+                transition: all 0.3s;
+            }
+
+            header .navbar a::after {
+                content: '';
+                position: absolute;
+                bottom: 5px;
+                left: 50%;
+                width: 0;
+                height: 2px;
+                background: #00ffcc;
+                transition: all 0.3s;
+                transform: translateX(-50%);
+            }
+
+            header .navbar a:hover::after {
+                width: 70%;
+            }
+
+            header .navbar a:hover {
+                color: #00ffcc;
+                transform: translateY(-2px);
+            }
+
+            header #icons {
+                width: 30px;
+                height: 30px;
+                cursor: pointer;
+                animation: iconPulse 2.5s infinite;
+                transition: transform 0.3s;
+            }
+
+            header #icons:hover {
+                transform: scale(1.2) rotate(15deg);
+            }
+
+            @keyframes iconPulse {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.7; }
+            }
+
+            /* ========== SERVICES SECTION ========== */
+            main #services {
+                background: linear-gradient(135deg, rgba(102,126,234,0.9), rgba(118,75,162,0.9));
+                padding: 60px 20px;
+                position: relative;
+            }
+
+            main .services-container {
+                text-align: center;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            main .service-title h1 {
+                font-size: 32px;
+                margin-bottom: 15px;
+                background: linear-gradient(45deg, #fff, #ffcc00, #ff6699, #fff);
+                background-size: 300% 300%;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                animation: titleGradient 4s ease infinite;
+            }
+
+            @keyframes titleGradient {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
+
+            main .service-title p {
+                font-size: 17px;
+                color: rgba(255,255,255,0.95);
+                max-width: 600px;
+                margin: 0 auto 40px;
+                line-height: 1.7;
+                animation: fadeInUp 1.5s ease 0.2s both;
+            }
+
+            main .service-list-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 25px;
+            }
+
+            main .service-item {
+                background: rgba(255,255,255,0.15);
+                padding: 25px 20px;
+                border-radius: 20px;
+                backdrop-filter: blur(10px);
+                animation: zoomIn 0.8s ease both;
+                transition: transform 0.3s, box-shadow 0.3s;
+            }
+
+            main .service-item:nth-child(1) { animation-delay: 0.1s; }
+            main .service-item:nth-child(2) { animation-delay: 0.3s; }
+            main .service-item:nth-child(3) { animation-delay: 0.5s; }
+
+            @keyframes zoomIn {
+                from { opacity: 0; transform: scale(0.8); }
+                to { opacity: 1; transform: scale(1); }
+            }
+
+            main .service-item:hover {
+                transform: translateY(-10px) scale(1.03);
+                box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            }
+
+            main .service-item img {
+                width: 180px;
+                height: 180px;
+                border-radius: 50%;
+                object-fit: cover;
+                border: 4px solid white;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+                animation: imgFloat 3s ease-in-out infinite;
+                transition: transform 0.3s;
+            }
+
+            main .service-item:nth-child(1) img { animation-delay: 0s; }
+            main .service-item:nth-child(2) img { animation-delay: 1s; }
+            main .service-item:nth-child(3) img { animation-delay: 2s; }
+
+            @keyframes imgFloat {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-12px); }
+            }
+
+            main .service-item img:hover {
+                transform: scale(1.08) rotate(3deg);
+            }
+
+            main .service-item h2 {
+                font-size: 20px;
+                font-family: 'comic sans ms', cursive;
+                color: white;
+                margin-top: 15px;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+                animation: textPop 2.5s infinite;
+            }
+
+            @keyframes textPop {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.06); }
+            }
+
+            /* ========== GALLERY SECTION ========== */
+            main #gallery {
+                background: linear-gradient(135deg, rgba(250,112,154,0.9), rgba(254,225,64,0.9), rgba(48,207,208,0.9));
+                background-size: 400% 400%;
+                animation: galleryBG 20s ease infinite;
+                padding: 60px 20px;
+            }
+
+            @keyframes galleryBG {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
+
+            main .gallery-container {
+                text-align: center;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            main .gallery-title h1 {
+                font-size: 32px;
+                color: white;
+                margin-bottom: 10px;
+                background: linear-gradient(45deg, #fff, #ff6b6b, #feca57, #fff);
+                background-size: 300% 300%;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                animation: titleGradient 4s ease infinite;
+            }
+
+            main .gallery-title p {
+                font-size: 17px;
+                color: white;
+                margin-bottom: 35px;
+                animation: fadeInUp 1.5s ease 0.3s both;
+                text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            }
+
+            main .gallery-list-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 25px;
+                padding: 20px;
+            }
+
+            main .gallery-list-container img {
+                width: 280px;
+                height: 190px;
+                border-radius: 15px;
+                object-fit: cover;
+                box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+                animation: gallerySlide 0.8s ease both;
+                transition: all 0.4s;
+                cursor: pointer;
+            }
+
+            main .gallery-list-container img:nth-child(1) { animation-delay: 0.1s; }
+            main .gallery-list-container img:nth-child(2) { animation-delay: 0.2s; }
+            main .gallery-list-container img:nth-child(3) { animation-delay: 0.3s; }
+            main .gallery-list-container img:nth-child(4) { animation-delay: 0.4s; }
+            main .gallery-list-container img:nth-child(5) { animation-delay: 0.5s; }
+            main .gallery-list-container img:nth-child(6) { animation-delay: 0.6s; }
+
+            @keyframes gallerySlide {
+                from { opacity: 0; transform: translateY(40px) rotate(-3deg); }
+                to { opacity: 1; transform: translateY(0) rotate(0); }
+            }
+
+            main .gallery-list-container img:hover {
+                transform: translateY(-12px) scale(1.04) rotate(1deg);
+                box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+                filter: brightness(1.1);
+            }
+
+            /* ========== FOOTER ========== */
+            footer .footer-container {
+                background: linear-gradient(90deg, #0033cc, #0066ff, #0099ff);
+                background-size: 200% 100%;
+                animation: navGradient 6s ease infinite;
+                color: white;
+                text-align: center;
+                padding: 25px 20px;
+                font-weight: 500;
+            }
+
+            /* ========== SCROLL ANIMATION ========== */
+            .scroll-reveal {
+                opacity: 0;
+                transform: translateY(40px);
+                transition: all 0.8s ease;
+            }
+
+            .scroll-reveal.active {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 🎉 WELCOME SCREEN -->
+        <div class="welcome-screen" id="welcomeScreen">
+            <div class="floating-shapes">
+                <div class="shape"></div>
+                <div class="shape"></div>
+                <div class="shape"></div>
+                <div class="shape"></div>
+            </div>
+            <div class="welcome-content">
+                <h1 class="welcome-title">✨ SELAMAT DATANG ✨</h1>
+                <p class="welcome-subtitle">Di Website Portfolio JANDRI HARTAT GEA</p>
+                <button class="enter-btn" onclick="enterWebsite()"> MASUK WEBSITE</button>
+            </div>
+        </div>
+
+        <!-- 🏠 HEADER / HOME -->
+        <header id="home">
+            <!-- Particles -->
+            <div class="header-particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+
+            <nav class="navbar">
+                <div class="logo">
+                    <img src="logo.png" alt="Logo" class="logo-img">
+                </div>
+                <ul>
+                    <li><a href="#home">🏠 Home</a></li>
+                    <li><a href="#services">⚙️ Foto</a></li>
+                    <li><a href="#gallery">🖼️ Gallery</a></li>
+                </ul>
+                <img src="gg.jpg" alt="theme" id="icons">
+            </nav>
+
+            <div class="banner">
+                <img src="koko.png" alt="car-image">
+            </div>
+
+            <div class="intro">
+                <h1>Web Site JANDRI</h1>
+                <p>Selamat datang di website portfolio JANDRI.<br>
+                Website ini dibuat sebagai media untuk menampilkan<br>
+                berbagai karya dan proyek di bidang teknologi informasi.<br>
+                Setiap karya merupakan hasil dari proses belajar,<br>
+                eksperimen, dan pengembangan skill pemrograman. 💻✨</p>
+                <button class="btn">
+                    <img src="WA.png" alt="WA" class="icons-whatsapp">
+                    Hubungi Kami <br> 082267029151
+                </button>
+            </div>
+        </header>
+
+        <!-- ⚙️ SERVICES SECTION -->
+        <main>
+            <section id="services">
+                <div class="services-container">
+                    <div class="service-title scroll-reveal">
+                        <h1> Menari di antara logika dan imajinasi</h1>
+                        <p>Saya bukan sekadar membuat karya. Saya menciptakan alasan bagi orang untuk berhenti sejenak, melihat, dan berkata, <em>"Wah, ini beda!"</em> ✨</p>
+                    </div>
+
+                    <div class="service-list-container">
+                        <div class="service-item scroll-reveal">
+                            <img src="akal.jpg" alt="GEA">
+                            <h2> GEA</h2>
+                        </div>
+                        <div class="service-item scroll-reveal">
+                            <img src="meme.png" alt="HAndroge">
+                            <h2>📱 HAndroge</h2>
+                        </div>
+                        <div class="service-item scroll-reveal">
+                            <img src="aja.jpg" alt="Timbunan Bukhe">
+                            <h2> Timbunan Bukhe</h2>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!--  GALLERY SECTION -->
+            <section id="gallery">
+                <div class="gallery-container">
+                    <div class="gallery-title scroll-reveal">
+                        <h1>📸 Gallery</h1>
+                        <p>Jangan Terlalu Dilihat Nanti Tertarik 😉✨</p>
+                    </div>
+                    <div class="gallery-list-container">
+                        <img src="aja.jpg" alt="1">
+                        <img src="mbg.jpg" alt="2">
+                        <img src="olo.jpg" alt="3">
+                        <img src="oafu.jpg" alt="4">
+                        <img src="pols.jpg" alt="5">
+                        <img src="baja.jpg" alt="6">
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- 🦶 FOOTER -->
+        <footer>
+            <div class="footer-container">
+                <p>© 2024 Project Landing Page Website JANDRI GEA | Made with ❤️ & 💻</p>
+            </div>
+        </footer>
+
+        <script>
+            // === Masuk Website ===
+            function enterWebsite() {
+                const welcome = document.getElementById('welcomeScreen');
+                welcome.classList.add('hide');
+                setTimeout(() => {
+                    welcome.style.display = 'none';
+                }, 800);
+            }
+
+            // === Toggle Dark/Light Theme ===
+            const themeToggle = document.getElementById('icons');
+            function toggleTheme() {
+                if (document.body.classList.contains('dark-theme')) {
+                    document.body.classList.remove('dark-theme');
+                    themeToggle.src = 'oafu.png';
+                } else {
+                    document.body.classList.add('dark-theme');
+                    themeToggle.src = 'koko.png';
+                }
+            }
+            themeToggle.addEventListener('click', toggleTheme);
+
+            // === Scroll Animation ===
+            const revealElements = document.querySelectorAll('.scroll-reveal');
+            function checkScroll() {
+                revealElements.forEach(el => {
+                    const elementTop = el.getBoundingClientRect().top;
+                    const triggerPoint = window.innerHeight * 0.85;
+                    if (elementTop < triggerPoint) {
+                        el.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', checkScroll);
+            window.addEventListener('load', checkScroll);
+        </script>
+    </body>
+</html>
